@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login</title>
+</head>
+<body>
+<h2>Login Page</h2>
+<form action="/send-otp" method="post">
+    <input type="email" name="email" placeholder="Enter Email" required />
+    <button type="submit">Send OTP</button>
+</form>
+<p th:text="${error}"></p>
+</body>
+</html>

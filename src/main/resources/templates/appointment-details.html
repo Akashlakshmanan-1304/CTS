@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+        <title>Confirm Appointment</title>
+    </head>
+<body>
+<h2 th:text="'Booking with Dr.'+${doctor.name}"></h2>
+<p th:text="'Email: ' + ${doctor.email}"></p>
+<p th:text="'Phone: ' + ${doctor.phone}"></p>
+<p th:text="'Selected Date: ' + ${date}"></p>
+
+<form th:action="@{/appointment/book}" method="post">
+    <input type="hidden" name="doctorId" th:value="${doctor.userID}" />
+    <input type="hidden" name="date" th:value="${date}" />
+
+    <label for="timeSlot">Choose a time slot:</label>
+    <select name="timeSlot" id="timeSlot" required>
+        <option value="">-- Select a Time Slot --</option>
+        <option th:each="slot : ${timeSlots}"
+                th:value="${slot}"
+                th:text="${slot}">
+        </option>
+    </select>
+
+    <br><br>
+    <button type="submit">Confirm Booking</button>
+</form>
+</body>
+</html>

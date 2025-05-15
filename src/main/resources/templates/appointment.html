@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Appointment Booking</title>
+</head>
+<body>
+<h2>Select a Doctor and Book Appointment</h2>
+<p th:text="${currentUser.toString()}"></p>
+
+    <label for="appointmentDate">Select Date (within 5 days):</label>
+    <input type="date" id="appointmentDate" name="date" required />
+    <br><br>
+    <table border="1">
+    <tr>
+        <th>Doctor Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Action</th>
+    </tr>
+    <tr th:each="doctor : ${doctors}">
+        <td th:text="${doctor.name}"></td>
+        <td th:text="${doctor.email}"></td>
+        <td th:text="${doctor.phone}"></td>
+        <td>
+    <button type="button" th:attr="data-doctor=${doctor.name}" onclick="bookAppointment(this)">
+    Book Appointment
+    </button>
+</td>
+</tr>
+</table>
+
+<script>
+    const dateInput = document.getElementById("appointmentDate");
+    const today = new Date();
+    const maxDate = new Date();
+    maxDate.setDate(today.getDate() + 5);
+
+    dateInput.min = today.toISOString().split("T")[0];
+    dateInput.max = maxDate.toISOString().split("T")[0];
+
+    function bookAppointment(button) {
+        const selectedDate = document.getElementById("appointmentDate").value;
+        if (!selectedDate) {
+            alert("Please select a date first.");
+            return;
+        }
+
+        const doctorName = button.getAttribute("data-doctor");
+        window.location.href = `/appointment/${doctorName}?date=${selectedDate}`;
+    }
+</script>
+</body>
+</html>
